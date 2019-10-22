@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+  frontend:
+    build:
+      dockerfile: Dockerfile
+      context: ./frontend/foodexpress/
+    container_name: frontend
+    ports:
+      - 8080:80
+    depends_on:
+      - backend
+  backend:
+    build:
+      dockerfile: Dockerfile
+      context: ./backend/foodExpress
+    ports:
+      - 9090:9000
+    container_name: backend
+    depends_on:
+      - database
+  database:
+    build:
+      dockerfile: Dockerfile
+      context: ./database
+    container_name: database
+    networks:
+      - development-network
+networks:
+  development-network:
+    driver: bridge
